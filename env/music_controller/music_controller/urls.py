@@ -21,7 +21,5 @@ urlpatterns = [
     #admin domain for urls
     path('admin/', admin.site.urls), 
     #backend domain for urls
-    path('api/', include('api.urls')),
-    #main user domain
-    path('', include('frontend.urls'))
+    path('api/', include('api.urls'))
 ]
