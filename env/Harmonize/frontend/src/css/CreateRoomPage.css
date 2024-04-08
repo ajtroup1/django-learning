@@ -1,0 +1,19 @@
+.gradient-create {
+  background: linear-gradient(to bottom, #18db59, rgba(255, 255, 255, 0));
+  height: 70vh;
+}
+/* CSS */
+.form-check-input {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.form-check-label {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+#check-box {
+  margin-right: 70px;
+}

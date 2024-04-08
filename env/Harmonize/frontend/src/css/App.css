@@ -1,0 +1,11 @@
+html,
+body,
+#app,
+.main-content {
+  height: 100%;
+  margin: 0;
+}
+
+.main-content {
+  width: 100%;
+}

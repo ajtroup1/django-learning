@@ -1,0 +1,107 @@
+.main-contents {
+  width: 100%; /* Updated to take up the width of the container */
+  height: auto;
+}
+
+
+#nav-logo {
+    height: 30px;
+    width: auto;
+    margin-right: 20px;
+}
+
+.nav-btn {
+  width: 100px;
+}
+
+#admin-login-button {
+  margin-right: 10px;
+  width: 100px;
+}
+
+.footer-container {
+  margin-left: 90px;
+  margin-right: 90px;
+}
+
+#footer-logo {
+  width: 30px;
+  height: auto;
+  margin-left: 40px;
+  margin-right: 5px;
+}
+
+.gradient {
+  background: linear-gradient(to bottom, #23f7f4, rgba(255, 255, 255, 0));
+  height: 90vh;
+}
+/* .gradient-overlay-left {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 70px; 
+  height: 100%; 
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1)), url('https://as1.ftcdn.net/v2/jpg/01/01/21/38/1000_F_101213808_cklZ1b0OItwRy29INlRFXZB1xSvlXYRz.jpg');
+  z-index: -1;
+}
+
+.gradient-overlay-right {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 70px;
+  height: 100%;
+  background-image: linear-gradient(to left, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1)), url('https://as1.ftcdn.net/v2/jpg/01/01/21/38/1000_F_101213808_cklZ1b0OItwRy29INlRFXZB1xSvlXYRz.jpg');
+  z-index: -1;
+} */
+
+.heading-container {
+  display: flex;
+  align-items: center; /* Center items vertically */
+  justify-content: center; /* Center items horizontally */
+  /* padding-top: 40px; */
+}
+
+
+.carousel-container {
+  width: 40%;
+  margin: auto; /* Add margin for distance from the top */
+  position: relative; /* Add relative positioning */
+  overflow: hidden;
+  padding-top: 50px;
+}
+
+.carousel-item {
+  background-color: #7efce7; /* Add a solid background color */
+  border: 0px solid transparent; /* Add transparent border */
+  border-radius: 0px; /* Add border radius for a rounded look */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.carousel-item img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+.carousel-caption {
+  position: absolute;
+  top: 50%; /* Center the caption vertically */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  padding: 20px; /* Add padding for better readability */
+  border-radius: 10px; /* Add border radius for a rounded look */
+  color: white; /* Set text color to white */
+}
+
+#slide1-logo {
+    height: 50px;
+}
+
+#carousel-btn {
+    width: 150px;
+    margin-top: -10px;
+}
+
+
