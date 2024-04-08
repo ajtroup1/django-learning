@@ -86,6 +86,13 @@ DATABASES = {
 }
 
 
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Database-backed sessions
+SESSION_COOKIE_NAME = 'sessionid'  # Name of the session cookie
+SESSION_COOKIE_SECURE = False  # Set it to True for HTTPS connections
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # Session expires when the user closes the browser
+SESSION_SAVE_EVERY_REQUEST = True  # Save the session on every request
+# SESSION_COOKIE_HTTPONLY = True
+
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 

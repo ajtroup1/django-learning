@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 import "../css/Room.css";
 
 function Room(props) {
@@ -8,10 +9,18 @@ function Room(props) {
   const [room, setRoom] = useState({});
   const { roomCode } = useParams();
   const [isHost, setIsHost] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
 
   useEffect(() => {
     fetchRoomDetails(roomCode);
   }, [roomCode]);
+
+  useEffect(() => {
+    const sessionKey = Cookies.get("sessionid");
+    if (sessionKey === room.host) {
+      setIsHost(true);
+    }
+  }, []);
 
   const fetchRoomDetails = async (roomCode) => {
     try {
@@ -23,6 +32,9 @@ function Room(props) {
         navigate("/");
       } else {
         console.log("Room received:", currentRoom);
+        if (sessionStorage.getItem("session_key") == room.host) {
+          setIsHost(true);
+        }
         setRoom(currentRoom);
       }
     } catch (error) {
@@ -30,14 +42,20 @@ function Room(props) {
     }
   };
 
+  const updateShowSettings = (x) => {
+    setShowSettings(x);
+  };
+
   const handleLeave = () => {
     const postOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
     };
-    fetch("http://127.0.0.1:8000/api/leaveroom", postOptions).then((_response) => {
-        navigate('/')
-    });
+    fetch("http://127.0.0.1:8000/api/leaveroom", postOptions).then(
+      (_response) => {
+        navigate("/");
+      }
+    );
   };
 
   return (
@@ -52,10 +70,9 @@ function Room(props) {
             ) : (
               <p>Guests cannot pause the music</p>
             )}
-            {room.guest_can_pause ? (
-              <p>You are the host</p>
-            ) : (
-              <p>You are not the host</p>
+            {isHost ? <p>You are the host</p> : <p>You are not the host</p>}
+            {isHost == true && (
+              <button className="btn btn-primary">Settings</button>
             )}
             <button className="btn btn-danger" onClick={handleLeave}>
               Leave Room
