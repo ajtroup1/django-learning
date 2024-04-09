@@ -104,6 +104,7 @@ class LeaveRoom(APIView):
 
         return Response({'Message': 'Success'}, status=status.HTTP_200_OK)
 
+
 class UpdateRoom(APIView):
     serializer_class = UpdateRoomSerializer
 
@@ -111,7 +112,6 @@ class UpdateRoom(APIView):
         if not self.request.session.exists(self.request.session.session_key):
             self.request.session.create()
 
-        print("Request data: %s", dict(request.data))
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             guest_can_pause = serializer.data.get('guest_can_pause')

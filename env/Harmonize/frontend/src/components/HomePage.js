@@ -36,6 +36,7 @@ export default class HomePage extends Component {
     return (
       <div className="main-contents">
         <div className="gradient">
+          <h1 className="home-title">Harmonize</h1>
           <div className="carousel-container">
             <div
               id="carouselExampleControls"
@@ -49,7 +50,10 @@ export default class HomePage extends Component {
                     className="d-block w-100"
                     alt="Join a Room"
                   />
-                  <div className="carousel-caption d-none d-md-block d-flex flex-column justify-content-center" style={{ paddingTop: "50px"}}>
+                  <div
+                    className="carousel-caption d-none d-md-block d-flex flex-column justify-content-center"
+                    style={{ paddingTop: "50px" }}
+                  >
                     <h5>Harmonize</h5>
                     <p>The best way to connect.</p>
                   </div>
@@ -133,7 +137,7 @@ export default class HomePage extends Component {
   render() {
     return (
       <Router>
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
           <div className="container-fluid">
             <div>
               <img src={harmonizeLogo} alt="" id="nav-logo" />

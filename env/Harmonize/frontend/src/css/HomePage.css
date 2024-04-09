@@ -3,11 +3,10 @@
   height: auto;
 }
 
-
 #nav-logo {
-    height: 30px;
-    width: auto;
-    margin-right: 20px;
+  height: 30px;
+  width: auto;
+  margin-right: 20px;
 }
 
 .nav-btn {
@@ -32,7 +31,7 @@
 }
 
 .gradient {
-  background: linear-gradient(to bottom, #23f7f4, rgba(255, 255, 255, 0));
+  background: linear-gradient(to bottom, #ff4d4d, rgba(255, 255, 255, 0));
   height: 90vh;
 }
 /* .gradient-overlay-left {
@@ -62,6 +61,15 @@
   /* padding-top: 40px; */
 }
 
+.home-title {
+  font-size: 4em; /* Adjust the font size as needed */
+  text-align: center;
+  padding-top: 40px;
+  position: relative;
+  z-index: 1; /* Ensure it's above other elements */
+  color: #ffffff; /* Set the color to white or any desired color */
+  text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.7); /* Dark text shadow */
+}
 
 .carousel-container {
   width: 40%;
@@ -75,13 +83,15 @@
   background-color: #7efce7; /* Add a solid background color */
   border: 0px solid transparent; /* Add transparent border */
   border-radius: 0px; /* Add border radius for a rounded look */
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  border-radius: 30px;
 }
 
 .carousel-item img {
   max-width: 100%;
   max-height: 100%;
   object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
 }
 
 .carousel-caption {
@@ -91,17 +101,15 @@
   transform: translate(-50%, -50%);
   background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
   padding: 20px; /* Add padding for better readability */
-  border-radius: 10px; /* Add border radius for a rounded look */
+  border-radius: 30px; /* Add border radius for a rounded look */
   color: white; /* Set text color to white */
 }
 
 #slide1-logo {
-    height: 50px;
+  height: 50px;
 }
 
 #carousel-btn {
-    width: 150px;
-    margin-top: -10px;
+  width: 150px;
+  margin-top: -10px;
 }
-
-

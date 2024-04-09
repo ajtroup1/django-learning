@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import "../css/Room.css";
 import CreateRoomPage from "./CreateRoomPage.js";
+import WhiteBack from "../assets/white-background.jpg";
+import Play from "../assets/play.png";
+import Pause from "../assets/pause.png";
+import Forward from "../assets/forward.png";
+import Back from "../assets/back.png";
 
 export default class Room extends Component {
   constructor(props) {
@@ -20,8 +25,16 @@ export default class Room extends Component {
     this.renderSettings = this.renderSettings.bind(this);
     this.getRoomDetails = this.getRoomDetails.bind(this);
     this.authenticateSpotify = this.authenticateSpotify.bind(this);
+    this.getCurrentSong = this.getCurrentSong.bind(this);
     this.getRoomDetails();
-    this.getCurrentSong();
+  }
+
+  componentDidMount() {
+    this.interval = setInterval(this.getCurrentSong, 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   getRoomDetails() {
@@ -71,8 +84,8 @@ export default class Room extends Component {
         }
       })
       .then((data) => {
-        console.log(data);
         this.setState({ song: data });
+        console.log(data);
       });
   }
 
@@ -99,6 +112,7 @@ export default class Room extends Component {
         <button
           className="btn btn-secondary"
           onClick={() => this.updateShowSettings(true)}
+          style={{ marginLeft: "30px" }}
         >
           Settings
         </button>
@@ -137,37 +151,42 @@ export default class Room extends Component {
     return (
       <div className="room-container">
         <div className="room-code">
-          <h4 className="room-code">Code: {this.roomCode}</h4>
+          <h2 className="room-code">Code: {this.roomCode}</h2>
         </div>
         <div className="info-container">
-          <div>
-            <h6>Votes to skip a song: {this.state.votesToSkip}</h6>
-            <h6>Guest Can Pause: {this.state.guestCanPause ? "Yes" : "No"}</h6>
-            {this.state.isHost ? <h6>You are the host</h6> : null}
-            {this.state.isHost ? this.renderSettingsButton() : null}
-            <div>
-              <button
-                className="btn btn-danger me-2"
-                onClick={this.leaveButtonPressed}
-                style={{ marginTop: "10px" }}
-              >
-                Leave Room
-              </button>
-            </div>
+          <div className="album-container">
+            <img src={this.state.song.image_url} id="album-cover" />
           </div>
+          <h2 style={{ marginTop: "10px" }}>{this.state.song.title}</h2>
+          <h5>{this.state.song.artist}</h5>
         </div>
         <div className="music-container">
-          <div className="album-container">
-            <img
-              src={this.state.song.image_url}
-              id="album-cover"
-              alt="Album Cover"
-            />
+          {this.state.isHost ? this.renderSettingsButton() : null}
+          <div className="items-box">
+            {this.state.isHost && (
+              <img src={WhiteBack} id="harmonize-bar-logo" />
+            )}
           </div>
-          <div className="music-info">
-            <p>Title: {this.state.song.title}</p>
-            <p>Artist: {this.state.song.artist}</p>
+          <div className="music-actions">
+            {this.state.isHost && (
+              <>
+                <img src={Back} id="play-btn" />
+                {this.state.song.is_playing ? (
+                  <img src={Pause} id="play-btn" />
+                ) : (
+                  <img src={Play} id="play-btn" />
+                )}
+                <img src={Forward} id="play-btn" />
+              </>
+            )}
           </div>
+          <button
+            className="btn btn-danger"
+            onClick={this.leaveButtonPressed}
+            style={{ marginRight: "30px" }}
+          >
+            Leave
+          </button>
         </div>
       </div>
     );
