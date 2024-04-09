@@ -6,6 +6,7 @@ import Play from "../assets/play.png";
 import Pause from "../assets/pause.png";
 import Forward from "../assets/forward.png";
 import Back from "../assets/back.png";
+import LinearProgress from "@mui/material/LinearProgress";
 
 export default class Room extends Component {
   constructor(props) {
@@ -100,6 +101,30 @@ export default class Room extends Component {
     });
   }
 
+  pauseSong() {
+    const requestOptions = {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+    };
+    fetch("/spotify/pause", requestOptions);
+  }
+
+  playSong() {
+    const requestOptions = {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+    };
+    fetch("/spotify/play", requestOptions);
+  }
+
+  skipSong() {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    };
+    fetch("/spotify/skip", requestOptions);
+  }
+
   updateShowSettings(value) {
     this.setState({
       showSettings: value,
@@ -145,6 +170,8 @@ export default class Room extends Component {
   }
 
   render() {
+    const songProgress =
+      (this.state.song.time / this.state.song.duration) * 100;
     if (this.state.showSettings) {
       return this.renderSettings();
     }
@@ -159,6 +186,10 @@ export default class Room extends Component {
           </div>
           <h2 style={{ marginTop: "10px" }}>{this.state.song.title}</h2>
           <h5>{this.state.song.artist}</h5>
+          <div>
+            <p>___________________________________________</p>
+            <LinearProgress variant="determinate" value={songProgress} />
+          </div>
         </div>
         <div className="music-container">
           {this.state.isHost ? this.renderSettingsButton() : null}
@@ -170,13 +201,24 @@ export default class Room extends Component {
           <div className="music-actions">
             {this.state.isHost && (
               <>
-                <img src={Back} id="play-btn" />
                 {this.state.song.is_playing ? (
-                  <img src={Pause} id="play-btn" />
+                  <img
+                    src={Pause}
+                    id="play-btn"
+                    onClick={() => this.pauseSong()}
+                  />
                 ) : (
-                  <img src={Play} id="play-btn" />
+                  <img
+                    src={Play}
+                    id="play-btn"
+                    onClick={() => this.playSong()}
+                  />
                 )}
-                <img src={Forward} id="play-btn" />
+                <img
+                  src={Forward}
+                  id="play-btn"
+                  onClick={() => this.skipSong()}
+                />
               </>
             )}
           </div>

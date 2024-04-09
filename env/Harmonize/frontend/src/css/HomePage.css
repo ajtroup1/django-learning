@@ -34,25 +34,6 @@
   background: linear-gradient(to bottom, #ff4d4d, rgba(255, 255, 255, 0));
   height: 90vh;
 }
-/* .gradient-overlay-left {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 70px; 
-  height: 100%; 
-  background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1)), url('https://as1.ftcdn.net/v2/jpg/01/01/21/38/1000_F_101213808_cklZ1b0OItwRy29INlRFXZB1xSvlXYRz.jpg');
-  z-index: -1;
-}
-
-.gradient-overlay-right {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 70px;
-  height: 100%;
-  background-image: linear-gradient(to left, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1)), url('https://as1.ftcdn.net/v2/jpg/01/01/21/38/1000_F_101213808_cklZ1b0OItwRy29INlRFXZB1xSvlXYRz.jpg');
-  z-index: -1;
-} */
 
 .heading-container {
   display: flex;
