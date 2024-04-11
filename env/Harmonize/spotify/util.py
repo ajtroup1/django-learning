@@ -68,11 +68,15 @@ def execute_spotify_api_request(session_id, endpoint, post_=False, put_=False):
     tokens = get_user_tokens(session_id)
     headers = {'Content-Type': 'application/json',
                'Authorization': "Bearer " + tokens.access_token}
+    
+    # print(tokens.access_token)
 
     if post_:
         post(BASE_URL + endpoint, headers=headers)
     if put_:
         put(BASE_URL + endpoint, headers=headers)
+
+    # print('url: ',BASE_URL + endpoint)
 
     response = get(BASE_URL + endpoint, {}, headers=headers)
     try:
@@ -88,3 +92,9 @@ def pause_song(session_id):
 
 def skip_song(session_id):
     return execute_spotify_api_request(session_id, "player/next", post_=True)
+
+def rewind_song(session_id):
+    return execute_spotify_api_request(session_id, "player/previous", post_=True)
+
+def set_volume(session_id, val):
+    return execute_spotify_api_request(session_id, f"player/volume?volume_percent={val}", put_=True)

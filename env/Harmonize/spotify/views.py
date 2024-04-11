@@ -77,6 +77,10 @@ class CurrentSong(APIView):
         album_cover = item.get('album').get('images')[0].get('url')
         is_playing = response.get('is_playing')
         song_id = item.get('id')
+        volume_percent = response.get('device', {}).get('volume_percent')
+
+
+        # print(response)
 
         artist_string = ""
 
@@ -94,7 +98,8 @@ class CurrentSong(APIView):
             'image_url': album_cover,
             'is_playing': is_playing,
             'votes': 0,
-            'id': song_id
+            'id': song_id,
+            # 'volume_percent': volume_percent
         }
 
         return Response(song, status=status.HTTP_200_OK)
@@ -126,6 +131,50 @@ class SkipSong(APIView):
 
         if self.request.session.session_key == room.host:
             skip_song(room.host)
+        else:
+            pass
+
+        return Response({}, status=status.HTTP_204_NO_CONTENT)
+    
+class RewindSong(APIView):
+    def post(self, request, format=None):
+        room_code = self.request.session.get('room_code')
+        room = Room.objects.filter(code=room_code)[0]
+
+        if self.request.session.session_key == room.host:
+            rewind_song(room.host)
+        else:
+            pass
+
+        return Response({}, status=status.HTTP_204_NO_CONTENT)
+    
+class CurrentDevice(APIView):
+    def get(self, request, format=None):
+        room_code = self.request.session.get('room_code')
+        room = Room.objects.filter(code=room_code)
+        if room.exists():
+            room = room[0]
+        else:
+            return Response({}, status=status.HTTP_404_NOT_FOUND)
+        host = room.host
+        endpoint = "player/devices"
+        response = execute_spotify_api_request(host, endpoint)
+
+        if 'error' in response:
+            return Response({}, status=status.HTTP_204_NO_CONTENT)
+
+        devices = response.get('devices')
+        device = devices[0]
+
+        return Response(device, status=status.HTTP_200_OK)
+    
+class SetVolume(APIView):
+    def put(self, request, volume, format=None):
+        room_code = self.request.session.get('room_code')
+        room = Room.objects.filter(code=room_code)[0]
+
+        if self.request.session.session_key == room.host:
+            set_volume(room.host, volume)
         else:
             pass
 

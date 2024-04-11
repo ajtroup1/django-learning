@@ -12,21 +12,21 @@
   font-size: 1.125em;
   line-height: 1.6;
   color: #333;
-  background-size: 300%;
-  background-image: var(--gradient);
-  animation: bg-animation 50s infinite;
+  background: linear-gradient(-45deg, #f31d3d, rgb(164, 25, 164), #fb6b24);
+  background-size: 400% 400%;
+  animation: gradientAnimation 20s ease infinite;
   color: white;
 }
 
-@keyframes bg-animation {
+@keyframes gradientAnimation {
   0% {
-    background-position: left;
+    background-position: 0% 50%;
   }
   50% {
-    background-position: right;
+    background-position: 100% 50%;
   }
   100% {
-    background-position: left;
+    background-position: 0% 50%;
   }
 }
 
@@ -36,11 +36,12 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  background-color: rgba(255, 255, 255, 0.2);
-  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.3);
+  padding: 20px 20px;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-top: -150px;
+  margin-bottom: 40px;
 }
 
 /* Add margin to each child element except the last one */
@@ -64,13 +65,15 @@
   right: 0;
   margin-top: -205px;
   text-align: center;
+  font-weight: bold;
 }
 
 .music-container {
   position: absolute;
-  margin-bottom: -350px;
-  width: 40%;
+  margin-bottom: -390px;
+  width: 70%;
   background-color: rgba(255, 255, 255, 0.2);
+  /* background-color: red; */
   height: 20%;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -120,34 +123,64 @@
 
 .music-actions {
   position: absolute;
-  margin: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 38%; /* Position the container at the vertical center */
+  width: fit-content;
   display: flex;
-  justify-content: center; /* Horizontally center items */
-  align-items: center; /* Vertically center items */
-  width: 100px;
+  justify-content: center;
+  align-items: center;
   z-index: 2;
+  margin-right: 200px;
 }
 
-#play-btn {
-  height: 30px;
-  width: auto;
-  margin-right: 5px;
-  margin-left: 5px;
+.music-actions img {
+  margin: 0 5px; /* Add margin between buttons */
 }
-#pause-btn {
-  position: relative;
-  height: 30px;
+
+#play-btn,
+#pause-btn,
+#back-btn,
+#forward-btn {
+  height: 40px;
   width: auto;
-  margin-right: 5px;
-  margin-left: 5px;
+  margin: 0 5px; /* Add margin around each button */
 }
 
 #harmonize-bar-logo {
   opacity: 40%;
   position: absolute;
+  transform: translateX(80%);
   height: 115px;
   width: auto;
   border-radius: 100px;
   margin-right: 13px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.volume-container {
+  width: 50%;
+  /* background-color: red; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.volume-container .MuiLinearProgress-root {
+  width: 120%;
+}
+
+.volume-container p {
+  margin-bottom: 10px;
+}
+
+.volume-container button {
+  margin: 0 5px;
+  margin-top: 10px;
+  width: 50px;
+  height: 20px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
