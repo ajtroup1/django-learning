@@ -92,6 +92,7 @@ export default class Room extends Component {
       })
       .then((data) => {
         this.setState({ song: data });
+        // console.log(data);
       });
   }
 
@@ -106,7 +107,7 @@ export default class Room extends Component {
       })
       .then((data) => {
         this.setState({ device: data });
-        console.log(data);
+        // console.log(data);
       })
       .catch((error) => {
         console.error("Error fetching device:", error);
@@ -116,26 +117,26 @@ export default class Room extends Component {
   setVolume(direction) {
     let vol;
     if (direction === "increase") {
-      if (this.state.device.volume_percent < 76) {
-        vol = this.state.device.volume_percent + 25;
+      if (this.state.device.volume_percent < 91) {
+        vol = this.state.device.volume_percent + 10;
       } else {
         vol = 100;
       }
     } else if (direction === "decrease") {
-      if (this.state.device.volume_percent > 24) {
-        vol = this.state.device.volume_percent - 25;
+      if (this.state.device.volume_percent > 9) {
+        vol = this.state.device.volume_percent - 10;
       } else {
         vol = 0;
       }
     }
-    console.log(
-      "current vol is ",
-      this.state.device.volume_percent,
-      ", ",
-      direction,
-      "ing to ",
-      vol
-    );
+    // console.log(
+    //   "current vol is ",
+    //   this.state.device.volume_percent,
+    //   ", ",
+    //   direction,
+    //   "ing to ",
+    //   vol
+    // );
     this.changeVolume(vol);
   }
 
@@ -234,104 +235,153 @@ export default class Room extends Component {
   }
 
   render() {
-  const songProgress = (this.state.song.time / this.state.song.duration) * 100;
-  if (this.state.showSettings) {
-    return this.renderSettings();
-  }
-  return (
-    <div className="room-container">
-      <div className="room-code">
-        <h2 className="room-code">Code: {this.roomCode}</h2>
-      </div>
-      <div className="info-container">
-        <div className="album-container">
-          <img src={this.state.song.image_url} id="album-cover" />
+    const songProgress =
+      (this.state.song.time / this.state.song.duration) * 100;
+    if (this.state.showSettings) {
+      return this.renderSettings();
+    }
+    return (
+      <div className="room-container">
+        <div className="room-code">
+          <h2 className="room-code">Code: {this.roomCode}</h2>
         </div>
-        <h2 style={{ marginTop: "10px" }}>{this.state.song.title}</h2>
-        <h5>{this.state.song.artist}</h5>
-        <div>
-          <p>___________________________________________</p>
-          <LinearProgress variant="determinate" value={songProgress} />
+        <div className="info-container">
+          <p>
+            {this.state.song.votes} / {this.state.song.votes_required} votes to
+            skip
+          </p>
+          <div className="album-container">
+            <img src={this.state.song.image_url} id="album-cover" />
+          </div>
+          <h2 style={{ marginTop: "10px" }}>{this.state.song.title}</h2>
+          <h5>{this.state.song.artist}</h5>
+          <p>Listening on {this.state.device.name}</p>
+          <div>
+            <p>___________________________________________</p>
+            <LinearProgress variant="determinate" value={songProgress} />
+          </div>
         </div>
-      </div>
-      <div className="music-container">
-        {this.state.isHost ? this.renderSettingsButton() : null}
-        <div className="items-box">
-          {this.state.isHost && (
-            <img src={WhiteBack} id="harmonize-bar-logo" />
-          )}
-        </div>
-        <div className="music-actions">
+        <div className="music-container">
           {this.state.isHost && (
             <>
-              <img
-                src={Back}
-                id="back-btn"
-                onClick={() => this.rewindSong()}
-              />
-              {this.state.song.is_playing ? (
+              {this.state.isHost ? this.renderSettingsButton() : null}
+              <div className="items-box">
+                {this.state.isHost && (
+                  <img src={WhiteBack} id="harmonize-bar-logo" />
+                )}
+              </div>
+              <div className="music-actions">
                 <img
-                  src={Pause}
+                  src={Back}
+                  id="back-btn"
+                  onClick={() => this.rewindSong()}
+                />
+                {this.state.song.is_playing ? (
+                  <img
+                    src={Pause}
+                    id="play-btn"
+                    onClick={() => this.pauseSong()}
+                  />
+                ) : (
+                  <img
+                    src={Play}
+                    id="play-btn"
+                    onClick={() => this.playSong()}
+                  />
+                )}
+                <img
+                  src={Forward}
+                  id="play-btn"
+                  onClick={() => this.skipSong()}
+                />
+              </div>
+              {this.state.isHost && (
+                <div className="volume-container">
+                  <p>
+                    ____________________
+                    <LinearProgress
+                      variant="determinate"
+                      value={this.state.device.volume_percent}
+                    />
+                  </p>
+                  <div
+                    className=""
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      marginLeft: "50px",
+                    }}
+                  >
+                    <button
+                      className="btn btn-success"
+                      onClick={() => this.setVolume("increase")}
+                    >
+                      +
+                    </button>
+                    <button
+                      className="btn btn-danger"
+                      style={{ marginRight: "55px" }}
+                      onClick={() => this.setVolume("decrease")}
+                    >
+                      -
+                    </button>
+                  </div>
+                </div>
+              )}
+              {!this.state.isHost && (
+                <button
+                  className="btn btn-primary"
+                  onClick={() => this.skipSong()}
+                >
+                  Skip
+                </button>
+              )}
+              <button
+                className="btn btn-danger"
+                onClick={this.leaveButtonPressed}
+                style={{ marginRight: "30px" }}
+              >
+                Leave
+              </button>
+            </>
+          )}
+          {this.state.isHost == false && (
+            <>
+              <button
+                className="btn btn-secondary"
+                onClick={() => this.skipSong()}
+                style={{ marginRight: "30px" }}
+              >
+                Vote to skip
+              </button>
+              {this.state.song.is_playing ? (
+                <button
                   id="play-btn"
                   onClick={() => this.pauseSong()}
-                />
+                  className="btn btn-primary"
+                >
+                  Pause
+                </button>
               ) : (
-                <img
-                  src={Play}
+                <button
+                  className="btn btn-primary"
                   id="play-btn"
                   onClick={() => this.playSong()}
-                />
+                >
+                  Play
+                </button>
               )}
-              <img
-                src={Forward}
-                id="play-btn"
-                onClick={() => this.skipSong()}
-              />
+              <button
+                className="btn btn-danger"
+                onClick={this.leaveButtonPressed}
+                style={{ marginRight: "10px" }}
+              >
+                Leave
+              </button>
             </>
           )}
         </div>
-        {this.state.isHost && (
-          <div className="volume-container">
-            <p>
-              ____________________
-              <LinearProgress
-                variant="determinate"
-                value={this.state.device.volume_percent}
-              />
-            </p>
-            <div
-              className=""
-              style={{
-                display: "flex",
-                alignItems: "center",
-                marginLeft: "50px",
-              }}
-            >
-              <button
-                className="btn btn-success"
-                style={{ marginRight: "10px" }}
-                onClick={() => this.setVolume("increase")}
-              >
-                +
-              </button>
-              <button
-                className="btn btn-danger"
-                onClick={() => this.setVolume("decrease")}
-              >
-                -
-              </button>
-            </div>
-          </div>
-        )}
-        <button
-          className="btn btn-danger"
-          onClick={this.leaveButtonPressed}
-          style={{ marginRight: "30px" }}
-        >
-          Leave
-        </button>
       </div>
-    </div>
-  );
-}
+    );
+  }
 }
